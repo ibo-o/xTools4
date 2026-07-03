@@ -190,7 +190,7 @@ class TuningPreview:
         operator.read(self.controller.designspacePath)
         operator.loadFonts()
 
-        referenceSources = {'_'.join(k.split('_')[1:]): OpenFont(v, showInterface=False) for k, v in self.controller.referenceSources.items()}
+        referenceSources = {'_'.join(k.split('_')[1:]): OpenFont(v, showInterface=False) for k, v in self.controller.referenceSourcesPaths.items()}
 
         for styleName, ufoPath in self.controller.tuningSources.items():
             styleNameParts = styleName.split('_')

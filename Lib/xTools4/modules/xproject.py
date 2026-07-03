@@ -77,6 +77,12 @@ class xProject:
     parametricAxes = []
     '''A list of parametric axes as 4-letter tags.'''
 
+    parametricAxesNames = {
+        'GRAD' : 'Grade',
+        'XTSP' : 'Spacing',
+    }
+    '''A dict with custom parametric axis names (values) for 4-letter tags (keys).'''
+
     parametricAxesHidden = True
     '''A switch to make parametric axes hidden (or not).'''
 
@@ -568,17 +574,51 @@ class xProject:
 
         print('...done!\n')
 
-    def splitSources(self, srcName, dstName, glyphNames):
+    def splitSources(self, srcName, dstName, glyphNames, preflight=True):
         '''Split new parametric sources from existing sources.'''
+        print('splitting parametric sources...\n')
+
         for srcPath in self.sourcesPaths:
             srcFileName = os.path.split(srcPath)[-1]
             if srcName in srcFileName:
+                # get source font
+                srcFont = OpenFont(srcPath, showInterface=False)
+                # make dest font
                 dstFileName = srcFileName.replace(srcName, dstName)
-                print(srcFileName, dstFileName)
-                # 1. duplicate default as dstName
-                # 2. copy glyphNames from srcName to dstName
-                # 3. copy glyphNames from default to srcName
-        pass
+                print(f'\tcreating {dstFileName} from {srcFileName}...')
+                # duplicate default as dstName
+                print(f'\t\tduplicating default as {dstFileName}...')
+                dstPath = os.path.join(self.sourcesFolder, dstFileName)
+                if os.path.exists(dstPath):
+                    shutil.rmtree(dstPath)
+                shutil.copytree(self.defaultSourcePath, dstPath)
+                dstFont = OpenFont(dstPath, showInterface=False)
+                # copy glyphNames from srcName to dstName
+                print('\t\tcopying source glyphs to new font...')
+                for glyphName in glyphNames:
+                    if glyphName not in srcFont:
+                        continue
+                    srcGlyph = srcFont[glyphName]
+                    # print(f'\t\t\tcopying {glyphName} from {srcFileName} to {dstFileName}...')
+                    dstFont.insertGlyph(srcGlyph, name=glyphName)
+                # copy glyphNames from default to srcName
+                print('\t\tcopying default glyphs to source font...')
+                for glyphName in glyphNames:
+                    if glyphName not in self.defaultFont:
+                        continue
+                    defaultGlyph = self.defaultFont[glyphName]
+                    # print(f'\t\t\tcopying {glyphName} from default to {srcFileName}...')
+                    srcFont.insertGlyph(defaultGlyph, name=glyphName)
+                # save fonts
+                if not preflight:
+                    print(f'\t\tsaving fonts...')
+                    srcFont.close(save=True)
+                    dstFont.close(save=True)
+
+                print()
+
+        print('...done!\n')
+
 
     def createTuningSources(self, sparse=False):
         '''Initialize tuning sources for all blended locations.'''
@@ -624,7 +664,7 @@ class xProject:
         operator.read(self.designspacePath)
         operator.loadFonts()
 
-        referenceSources = {'_'.join(k.split('_')[1:]): OpenFont(v, showInterface=False) for k, v in self.referenceSources.items()}
+        referenceSources = {'_'.join(k.split('_')[1:]): OpenFont(v, showInterface=False) for k, v in self.referenceSourcesPaths.items()}
 
         for glyphName in glyphNames:
 
@@ -697,17 +737,18 @@ class xProject:
         if self.verbose:
             print('\tadding parametric axes...')
 
-        for name in self.parametricAxes:
+        for tag in self.parametricAxes:
+
             # get default value
-            if name in self.measurementsDefault.values:
-                defaultValue = permille(self.measurementsDefault.values[name], self.defaultFont.info.unitsPerEm)
-            elif name in customAxes:
-                defaultValue = customAxes[name]
+            if tag in self.measurementsDefault.values:
+                defaultValue = permille(self.measurementsDefault.values[tag], self.defaultFont.info.unitsPerEm)
+            elif tag in customAxes:
+                defaultValue = customAxes[tag]
 
             # get min/max values from file names
             values = []
             for ufo in self.sourcesPaths:
-                if name in ufo:
+                if tag in ufo:
                     value = int(os.path.splitext(os.path.split(ufo)[-1])[0].split('_')[-1][4:])
                     values.append(value)
             if len(values) == 2:
@@ -718,13 +759,16 @@ class xProject:
                 values.sort()
                 minValue, maxValue = values
             else:
-                print(f'ERROR: {name}: {values}')
+                print(f'ERROR: {tag}: {values}')
                 continue
+
+            # get axis name
+            name = self.parametricAxesNames[tag] if tag in self.parametricAxesNames else tag
 
             # create axis
             a = AxisDescriptor()
             a.name    = name
-            a.tag     = name
+            a.tag     = tag
             a.minimum = minValue
             a.maximum = maxValue
             a.default = defaultValue
@@ -737,17 +781,19 @@ class xProject:
         if self.verbose:
             print('\tadding parametric sources...')
 
-        for name in self.parametricAxes:
+        for tag in self.parametricAxes:
             for ufoPath in self.sourcesPaths:
-                if name in ufoPath:
+                if tag in ufoPath:
+                    # get axis name
+                    name = self.parametricAxesNames[tag] if tag in self.parametricAxesNames else tag
                     # if self.verbose:
-                    #     print(f'\t\tadding {ufoPath}...')
+                    #     print(f'\t\tadding {ufoPath}...', end='')
                     src = SourceDescriptor()
                     src.path = ufoPath
                     src.familyName = self.familyName if not familyName else familyName
                     L = self.defaultLocation.copy()
                     value = int(os.path.splitext(os.path.split(ufoPath)[-1])[0].split('_')[-1][4:])
-                    src.styleName = src.name = f'{name}{value}'
+                    src.styleName = src.name = f'{tag}{value}'
                     L[name] = value
                     src.location = L
                     self.designspace.addSource(src)
@@ -834,7 +880,10 @@ class xProject:
             # get input value from style name
             inputLocation = {}
             for param in styleName.split('_'):
-                tag   = param[:4]
+                tag = param[:4]
+                # get axis name
+                # name = self.parametricAxesNames[tag] if tag in self.parametricAxesNames else tag
+
                 value = int(param[4:])
                 axisName  = blendedAxes[tag]['name']
                 inputLocation[axisName] = value
@@ -847,10 +896,14 @@ class xProject:
             # set value for corner tuning axes
             if self.tuning:
                 for tuningStyleName, tuningAxis in self.tuningAxes.items():
+                    tag = tuningAxis.tag
+                    # get axis name
+                    # name = self.parametricAxesNames[tag] if tag in self.parametricAxesNames else tag
+
                     if styleName == tuningStyleName:
-                        outputLocation[tuningAxis.tag] = tuningAxis.maximum
+                        outputLocation[tag] = tuningAxis.maximum
                     else:
-                        outputLocation[tuningAxis.tag] = tuningAxis.default
+                        outputLocation[tag] = tuningAxis.default
 
             m.inputLocation  = inputLocation
             m.outputLocation = outputLocation
