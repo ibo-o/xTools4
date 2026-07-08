@@ -55,7 +55,7 @@ def buildConstructionGlyph(constructionGlyph, font, clear=True, autoUnicodes=Tru
 
     return glyph
 
-def buildGlyphConstruction(font, construction, clear=True, verbose=False, indentLevel=0, autoUnicodes=True): # markColor=None
+def buildGlyphConstruction(font, construction, clear=True, verbose=False, indentLevel=0, autoUnicodes=True, markColor=None):
 
     '''
     Build glyph from Glyph Construction rule in the given font.
@@ -89,6 +89,9 @@ def buildGlyphConstruction(font, construction, clear=True, verbose=False, indent
 
     # build construction glyph in the font
     glyph = buildConstructionGlyph(constructionGlyph, font, clear=clear, autoUnicodes=autoUnicodes)
+
+    if markColor is not None:
+        glyph.markColor = markColor
 
     return glyph
 

@@ -24,12 +24,12 @@ from xTools4.modules.measurements import *
 from xTools4.modules.normalization import cleanupSources, normalizeSources
 from xTools4.modules.validation import validateDesignspace, validateFonts
 from xTools4.modules.ttx import ttf2ttx, ttx2ttf
-from xTools4.modules.xprojectLib import *
 from xTools4.modules.glyphMemeProofer import GlyphMemeProofer
 from xTools4.modules.glyphSetProofer import GlyphSetProofer
 from xTools4.modules.blendsPreview import BlendsPreview, getEffectiveLocation, instantiateGlyph
 from xTools4.modules.tuningPreview import TuningPreview
 from xTools4.modules.accents import buildAccentedGlyphs
+from xTools4.modules.xprojectLib import *
 
 
 class xProject:
@@ -62,7 +62,7 @@ class xProject:
     @property
     def designspaceFile(self):
         '''Returns the name of the designspace file.'''
-        return f'{self.familyName.replace(' ', '') }.designspace'
+        return f"{self.familyName.replace(' ', '') }.designspace"
 
     @property
     def designspacePath(self):
@@ -619,7 +619,6 @@ class xProject:
 
         print('...done!\n')
 
-
     def createTuningSources(self, sparse=False):
         '''Initialize tuning sources for all blended locations.'''
         if self.verbose:
@@ -845,10 +844,6 @@ class xProject:
             src.location = L
             self.designspace.addSource(src)
 
-    def addInstances(self):
-        '''Add instances to the designspace.'''
-        pass
-
     def addBlendedAxes(self):
         '''Add blended axes to the designspace.'''
         if self.verbose:
@@ -910,6 +905,31 @@ class xProject:
             m.description    = styleName
 
             self.designspace.addAxisMapping(m)
+
+    def addInstances(self, familyName=None):
+        '''Add instances to the designspace.'''
+
+        familyName_ = self.familyName if not familyName else familyName
+
+        if self.verbose:
+            print('\tadding instances...')
+
+        for styleName in self.blendedSources.keys():
+            # add only opsz/wght/wdth as instances
+            if not ('opsz' in styleName or 'wght' in styleName or 'wdth' in styleName):
+                continue
+
+            L = self.defaultLocation.copy()
+            for axis, value in self.blendedSources[styleName].items():
+                L[axis] = value
+
+            I = InstanceDescriptor()
+            I.familyName = familyName_
+            I.styleName = I.name = styleName.replace('_', ' ')
+            I.designLocation = L
+            I.filename = os.path.join('instances', f"{familyName_.replace(' ', '-')}_{styleName}.ufo")
+
+            self.designspace.addInstance(I)
 
     # building
 
@@ -1001,7 +1021,7 @@ class xProject:
 
     # saving
 
-    def cleanupSources(self, parametric=True, tuning=True, clearFontLibs=True, clearGlyphLibs=True, clearFontGuides=True, clearGlyphGuides=True, clearMarks=True, clearLayers=True, preflight=False, ignoreLayers=[]):
+    def cleanupSources(self, parametric=True, tuning=True, reference=True, clearFontLibs=True, clearGlyphLibs=True, clearFontGuides=True, clearGlyphGuides=True, clearMarks=True, clearLayers=True, preflight=False, ignoreLayers=[]):
         '''Remove unnecessary data from UFO sources.'''
 
         # delete all font libs except these:
@@ -1041,7 +1061,21 @@ class xProject:
                     # verbose=self.verbose
                 )
 
-    def normalizeSources(self, parametric=True, tuning=True):
+        if reference:
+            cleanupSources(self.referenceSourcesFolder,
+                    clearFontLibs=clearFontLibs,
+                    clearGlyphLibs=clearGlyphLibs,
+                    clearFontGuides=clearFontGuides,
+                    clearGlyphGuides=clearGlyphGuides,
+                    clearMarks=clearMarks,
+                    clearLayers=clearLayers,
+                    preflight=preflight,
+                    ignoreFontLibs=ignoreFontLibs,
+                    ignoreLayers=ignoreLayers,
+                    # verbose=self.verbose
+                )
+
+    def normalizeSources(self, parametric=True, tuning=True, reference=True):
         '''Normalize UFO sources.'''
 
         if parametric:
@@ -1049,6 +1083,9 @@ class xProject:
 
         if tuning:
             normalizeSources(self.tuningSourcesFolder, onlyModified=False, writeModTimes=False, verbose=self.verbose)
+
+        if reference:
+            normalizeSources(self.referenceSourcesFolder, onlyModified=False, writeModTimes=False, verbose=self.verbose)
 
     def addCustomKeysToLib(self):
         '''Save paths to data files in the designspace lib.'''
