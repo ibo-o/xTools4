@@ -13,17 +13,14 @@ A tool to open all parametric sources of a single glyph in a temporary font for 
 ![]({{ site.url }}/images/variable/GlyphMeme.png){: .img-fluid }
 </div>
 <div class='col-8' markdown='1'>
-designspace…
-: Open a dialog to select a designspace file.
-
-reload
-: Reload the previously selected designspace file.
+cases
+: Select a case from the list (lowercase, uppercase, figures, etc).
 
 glyph group
-: Select a glyph group from the list (imported from smart sets).
+: Select a glyph group from the list.
 
 glyph name
-: Select a glyph from which to load parameters (meme).
+: Select a glyph from which to load parametric glyph sources.
 
 glyph parameters (meme)
 : A list of all parameters involved in the variations of the selected glyph.
@@ -33,6 +30,12 @@ open
 
 save
 : Export the selected glyphs back into the UFO sources from where they came from.
+
+designspace…
+: Open a dialog to select a designspace file.
+
+reload
+: Reload the previously selected designspace file.
 </div>
 </div>
 

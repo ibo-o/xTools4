@@ -10,6 +10,7 @@ Tools to visualize and edit variable font sources.
 <div class='row'>
 
 <div class='col' markdown='1'>
+- [BlendsInstancer](blends-instancer)
 - [BlendsPreview](blends-preview)
 - [GlyphMeme](glyph-meme)
 - [GlyphMemeProofer](glyphmeme-proofer)

@@ -23,7 +23,7 @@ show default
 : Show the default glyph in the background.
 
 show distance
-: Show x and/or y distance of each point in relation to the same point in the default.
+: Show x and/or y distance of each point in relation to the default.
 
 selection only
 : Show the distance visualization only for selected points.

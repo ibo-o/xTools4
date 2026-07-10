@@ -170,12 +170,14 @@ class BlendsInstancerController(ezui.WindowController):
 
         styleName = getStyleNameFromReferenceSourcePath(self.font.path)
 
-        print(f'instantiating glyphs in {styleName}...\n')
+        if self.verbose:
+            print(f'instantiating glyphs in {styleName}...\n')
 
         for glyphName in glyphNames:
             glyph = self.font[glyphName]
 
-            print(f'\tinstantiating {glyphName}...')
+            if self.verbose:
+                print(f'\tinstantiating {glyphName}...')
 
             instanceGlyph = glyph.getRepresentation(KEY, font=self.font, operator=self.operator)
             instanceGlyph = RGlyph(instanceGlyph)
@@ -187,8 +189,9 @@ class BlendsInstancerController(ezui.WindowController):
             targetGlyph.width = instanceGlyph.width
             targetGlyph.performUndo()
 
-        print()
-        print('...done.\n')
+        if self.verbose:
+            print()
+            print('...done.\n')
 
     def _loadDesignspace(self):
         if self.verbose:
@@ -202,7 +205,6 @@ class BlendsInstancerController(ezui.WindowController):
             print('done.\n')
 
     def _updateFontLayers(self):
-        print('_updateFontLayers')
         layerNames = list(self.font.layerOrder) if self.font else []
         self.w.getItem("targetLayer").setItems(layerNames)
 
@@ -239,7 +241,6 @@ class BlendsInstancerSubscriberCurrentFont(Subscriber):
         self.controller._updateFontLayers()
 
     def currentFontLayersDidChangeLayer(self, info):
-        print('currentFontLayersDidChangeLayer')
         self.controller._updateFontLayers()
 
 
