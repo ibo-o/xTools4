@@ -1,13 +1,3 @@
-from importlib import reload
-import xTools4.modules.glyphMemeProofer
-reload(xTools4.modules.glyphMemeProofer)
-import xTools4.modules.tuningPreview
-reload(xTools4.modules.tuningPreview)
-import xTools4.modules.measurements
-reload(xTools4.modules.measurements)
-import xTools4.modules.xprojectLib
-reload(xTools4.modules.xprojectLib)
-
 import os, glob, json, shutil, time, datetime
 import subprocess
 from functools import cached_property

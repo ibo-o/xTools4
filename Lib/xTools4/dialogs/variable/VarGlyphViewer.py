@@ -1,9 +1,14 @@
+from importlib import reload
+import xTools4.modules.glyphutils
+reload(xTools4.modules.glyphutils)
+
 import ezui
 # from math import atan, degrees
 from mojo.UI import GetFile
 from mojo.roboFont import OpenWindow, OpenFont
 from mojo.subscriber import Subscriber, registerSubscriberEvent, roboFontSubscriberEventRegistry, registerGlyphEditorSubscriber, unregisterGlyphEditorSubscriber
 from mojo.events import postEvent
+from xTools4.modules.glyphutils import getImplicitSelectedPoints
 from xTools4.dialogs.variable.Measurements import colorCheckTrue, colorCheckFalse, colorCheckEqual
 
 
@@ -15,31 +20,6 @@ tempEditModeKey = 'com.xTools4.tempEdit.mode'
 colorCheckTrueBG  = 0.7, 1.0, 0.7, 0.85
 colorCheckFalseBG = 1.0, 0.7, 0.7, 0.85
 
-
-def getImplicitSelectedPoints(glyph):
-    '''
-    http://forum.robofont.com/topic/742/easier-way-of-getting-all-selected-contour-points
-
-    '''
-    pts = []
-    for contour in glyph.contours:
-        for i, segment in enumerate(contour.segments):
-            for pt in segment:
-                if not pt.selected:
-                    continue
-                pts.append(pt)
-                # implicit == include BCPs in selection
-                if pt.type != 'offcurve':
-                    # bcpIn
-                    if len(segment) == 3:
-                        bcpIn = segment[-2]
-                        pts.append(bcpIn)
-                    # bcpOut
-                    nextSegment = contour[(i + 1) % len(contour.segments)]
-                    if len(nextSegment) == 3:
-                        bcpOut = nextSegment[0]
-                        pts.append(bcpOut)
-    return pts
 
 # def getAngle(p1, p2):
 #     a = p2.x - p1.x
