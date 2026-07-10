@@ -46,9 +46,10 @@ Display
 ![]({{ site.url }}/images/variable/BlendsInstancer_preview.png){: .img-fluid}
 
 
-
 Color code
 ----------
+
+BlendsInstancer uses the same visualization colors as [VarGlyphViewer](../varglyph-viewer).
 
 | <span class='blue'>blue</span>   | neither x nor y values changing | 
 | <span class='red'>red</span>     | only x or y value changing      | 

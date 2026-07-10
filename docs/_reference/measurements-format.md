@@ -73,14 +73,9 @@ The direction of measurement must be one of the following characters:
 | a          | angled measurement     |
 {: .table .table-hover }
 
-<div class="card bg-light my-3 rounded-0">
-<div class="card-header">note</div>
-<div class="card-body" markdown='1'>
+<div class="alert alert-primary my-4 rounded-0" role="alert">
 The sign of the measured value indicates its direction. Some measurements are by definition negative, for example the descender value or a bottom overshoot.
-{: .card-text }
 </div>
-</div>
-
 
 ### Point IDs
 
@@ -103,9 +98,16 @@ Font-level vertical metrics values are also available using the following shortc
 | X         | x-height    | `0`           | `font.info.xHeight`   |
 {: .table .table-hover }
 
+<div class="alert alert-warning  my-4 rounded-0" role="alert" markdown=1>
+In addition to the standard (latin) vertical metrics values above, custom reference points can be defined – for example alignment zones for other scripts, or additional alignment points for latin.
+{: .card-text }
+</div>
+
 
 Python example
 --------------
+
+### Font-level measurements
 
 The key for font-level measurements is the name of the measurement.
 
@@ -123,6 +125,8 @@ fontMeasurements = {
 }
 ```
 
+### Glyph-level measurements
+
 The key for glyph-level measurements is an identifier created from the two point IDs.
 
 ```python
@@ -138,12 +142,38 @@ glyphMeasurements = {
 }
 ```
 
-<div class="card bg-light my-3 rounded-0">
-<div class="card-header">note</div>
-<div class="card-body" markdown='1'>
-The current glyph-level measurement format has one limitation: a pair of points can only have one measurement attached to it. It should be possible to have both x and y measurements for same pair of points though, for example the width and height of a serif. The format will be updated to address this.
-{: .card-text }
+<div class="alert alert-primary my-4 rounded-0" role="alert">
+The current glyph-level measurement format has one limitation: a pair of points can only have one measurement attached to it. It should be possible to have both x and y measurements for same pair of points though (for example, the width and height of a serif). The format can be updated in the future to address this issue.
 </div>
+
+<div class="alert alert-warning  my-4 rounded-0" role="alert" markdown=1> 
+### Custom reference points
+
+There is no standard or character limit for custom point names. Short letter codes are preferable for quicker typing and reading.
+
+```python
+customPoints = {
+    # additional vertical metrics for latin
+    'O' : {
+        'y' : 640,
+        'description' : 'old style figures top',
+    },
+    # custom vertical metrics for arabic
+    'AS' : {
+        'y' : 1600,
+        'description' : '[arabic] sky',
+    },
+    'AT' : {
+        'y' : 800,
+        'description' : '[arabic] tooth',
+    },
+    'AE' : {
+        'y' : -400,
+        'description' : '[arabic] earth',
+    },
+    # more custom points here ...
+}
+```
 </div>
 
 

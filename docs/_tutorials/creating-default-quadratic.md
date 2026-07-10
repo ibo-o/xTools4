@@ -26,7 +26,7 @@ Depending on the project we can either draw glyphs from scratch as quadratic con
 Converting from cubic contours
 ------------------------------
 
-Cubic glyphs can be automatically converted to quadratic, but the result needs to be manually reviewed and corrected. Redundant points should be cleaned up, without distorting the original drawing. The proper point types (corner, smooth or smooth) should also be chosen.
+Cubic glyphs can be automatically converted to quadratic, but the result needs to be manually reviewed and corrected. Redundant points should be cleaned up, without distorting the original drawing. The proper point types (corner, smooth or tangent) should also be chosen.
 
 ### Scaling the font
 {: .h4 }
