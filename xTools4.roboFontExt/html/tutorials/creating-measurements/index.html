@@ -7,13 +7,13 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://gferreira.github.io/xTools4/css/style.css" type="text/css" />
+    <link rel="stylesheet" href="http://localhost:4000/css/style.css" type="text/css" />
     <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
   </head>
   <body >
     <nav id='navbar-main' class="navbar fixed-top navbar-expand-sm"> <!-- navbar-dark bg-secondary -->
       <div class="container mx-auto px-md-4">
-        <a class="navbar-brand" id='logo' href="https://gferreira.github.io/xTools4/">
+        <a class="navbar-brand" id='logo' href="http://localhost:4000/">
           <i class="bi bi-tools fs-2"></i>
         </a>
         <button class="navbar-toggler navbar-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarItems" aria-controls="navbarItems" aria-expanded="false" aria-label="Toggle navigation">
@@ -21,10 +21,10 @@
         </button>
         <div class="collapse navbar-collapse user-select-none" id="navbarItems">
           <ul class="navbar-nav me-auto">
-            <li class="nav-item"><a class="nav-link" href="https://gferreira.github.io/xTools4/explanations/">explanations</a></li>
-            <li class="nav-item"><a class="nav-link" href="https://gferreira.github.io/xTools4/tutorials/">tutorials</a></li>
-            <li class="nav-item"><a class="nav-link" href="https://gferreira.github.io/xTools4/how-tos/">how-tos</a></li>
-            <li class="nav-item"><a class="nav-link" href="https://gferreira.github.io/xTools4/reference/">reference</a></li>
+            <li class="nav-item"><a class="nav-link" href="http://localhost:4000/explanations/">explanations</a></li>
+            <li class="nav-item"><a class="nav-link" href="http://localhost:4000/tutorials/">tutorials</a></li>
+            <li class="nav-item"><a class="nav-link" href="http://localhost:4000/how-tos/">how-tos</a></li>
+            <li class="nav-item"><a class="nav-link" href="http://localhost:4000/reference/">reference</a></li>
           </ul>
         </div>
       </div>
@@ -36,10 +36,10 @@
           <nav class='col-sm-3 mt-sm-2'>
             <ul class="pagination pagination-sm float-end">
               <li class="page-item">
-                <a class="page-link px-3 rounded-0 prev" href="https://gferreira.github.io/xTools4//tutorials/creating-default-quadratic" title='Creating a quadratic default font'>&laquo;</a>
+                <a class="page-link px-3 rounded-0 prev" href="http://localhost:4000//tutorials/creating-default-quadratic" title='Creating a quadratic default font'>&laquo;</a>
               </li>
               <li class="page-item">
-                <a class="page-link px-3 rounded-0 next" href="https://gferreira.github.io/xTools4//tutorials/creating-parametric-sources/" title='Creating parametric sources from a default'>&raquo;</a>
+                <a class="page-link px-3 rounded-0 next" href="http://localhost:4000//tutorials/creating-parametric-sources/" title='Creating parametric sources from a default'>&raquo;</a>
               </li>
             </ul>
           </nav>
@@ -47,10 +47,10 @@
         <nav aria-label="breadcrumb">
           <ol class='breadcrumb'>
             <li class='breadcrumb-item small'>
-              <a href="https://gferreira.github.io/xTools4">Index</a>
+              <a href="http://localhost:4000">Index</a>
             </li>
             <li class='breadcrumb-item small'>
-              <a href="https://gferreira.github.io/xTools4/tutorials/">
+              <a href="http://localhost:4000/tutorials/">
                 Tutorials
               </a>
             </li>
@@ -79,13 +79,13 @@
         <h3 class="h5" id="measurements-in-typeface-design">Measurements in typeface design</h3>
         <p>While working on a font, designers often need to keep track of certain values which should be used consistently throughout a typeface. Design features such as uppercase or lowercase stem thickness, overshoots, height and length of serifs, etc. should usually have the same dimensions across all glyphs in a font, more or less.</p>
         <p>In small projects, keeping track of such values can be as simple as writing them down on a piece of paper. For larger projects with multiple variation axes and/or multiple scripts, a spreadsheet is often good enough.</p>
-        <p>All major font editors have a measuring tool, and their measurements are all not ‘sticky’ – they disappear as soon as the user clicks on another tool, changes the current glyph, or closes the font.</p>
+        <p>While all major font editors have a measuring tool, their measurements are all not ‘sticky’ – they disappear as soon as the user clicks on another tool, changes the current glyph, or closes the font.</p>
         <p>Some specific font dimensions are used when hinting a font: PostScript fonts have slots for vertical and horizontal stems, and alignment zones; TrueType fonts can include a Control Values Table (CVT) with various values to be used by instructions.</p>
         <p>Parametric variable fonts …</p>
         <h3 class="h5" id="the-measurements-tool">The Measurements tool</h3>
-        <p>The <a href="#">Measurements</a> tool which is part of xTools4 introduces a new approach which integrates measuring deep into the design process. This approach was developed to enable the production of parametric variable fonts, but it can be useful to any typeface project, as it gives the designer insight into relationships between the glyph shapes in a font, and between multiple locations in a designspace.</p>
-        <p>The Measurements tool allows you to create a set of measurements for a given designspace, and to store them in a <a href="#">custom data format</a>. Measurements can be created at the font level, representing the default values for the whole font; and at the glyph level, indicating relevant measurements in individual glyphs and their relationship to the font-level values.</p>
-        <p>Once created, measurements can be used to check and compare the dimensions of any source against the default style (assuming the) as long as the point structures between the fonts remain compatible. The interface for measurement data uses a simple color scheme to greatly reduce the effort to make sense of the numbers. The tool also adds an interactive visualization of measurements to the Glyph Editor, giving the typeface designer numerical feedback in real-time while drawing.</p>
+        <p>The <a href="../../reference/tools/variable/measurements">Measurements tool</a> in xTools4 introduces a new approach which integrates measuring deep into the design process. This method was developed to enable the production of parametric variable fonts, but it can be useful to any typeface project, as it gives the designer insight into relationships between the glyph shapes in a font, and between multiple locations in a designspace.</p>
+        <p>The Measurements tool allows you to create a set of measurements for a given designspace, and to store them in a <a href="../../reference/measurements-format">measurements file</a>. Measurements can be created at the font level, representing the default values for the whole font; and at the glyph level, indicating relevant measurements in individual glyphs and their relationship to the font-level values.</p>
+        <p>Once created, measurements can be used to check and compare the dimensions of any source against the default style (assuming that point structures between sources are compatible). The interface for measurements uses a simple color scheme which helps us to make sense of the numbers. The tool also adds an interactive visualization of measurements to the Glyph Editor, giving the typeface designer numerical feedback in real-time while drawing.</p>
         <h3 class="h5" id="in-this-tutorial">In this tutorial</h3>
         <p>In this tutorial you will learn how to create measurements from scratch for an existing font and/or designspace. We will create font- and glyph-level measurements for common typeface design parameters (vertical and horizontal stems, counters, overshoots, serifs), and store them in an external file.</p>
         <h2 id="creating-font-level-measurements">Creating font-level measurements</h2>
@@ -117,7 +117,7 @@
             </tr>
           </tbody>
         </table>
-        <p>Let’s begin by opening the <a href="#">Measurements</a> tool, and the font you would like to measure. All three measurements above are taken from the glyph <code class="language-plaintext highlighter-rouge">/H</code>, so we open this glyph in the Glyph Editor.</p>
+        <p>Let’s begin by opening the <a href="../../reference/tools/variable/measurements">Measurements tool</a>, and the font you would like to measure. All three measurements above are taken from the glyph <code class="language-plaintext highlighter-rouge">/H</code>, so we open this glyph in the Glyph Editor.</p>
         <p>The first measurement in the list is <code class="language-plaintext highlighter-rouge">XOPQ</code>, or vertical stem thickness. We’ll measure it at the bottom left of the first stem. While in the <em>fonts</em> tab, we create the measurement by selecting points <code class="language-plaintext highlighter-rouge">A</code> and <code class="language-plaintext highlighter-rouge">B</code>, and clicking on the plus button at the bottom left. A new item will be added the font-level measurements table, with the glyph and point indexes already filled in. Click on the <em>name</em> column and type in the name of the measurement: <code class="language-plaintext highlighter-rouge">XOPQ</code>. Because this measurement starts with an <code class="language-plaintext highlighter-rouge">x</code>, the tool assumes that the measurement will be made along the x axis, and fills the <em>direction</em> column in as <code class="language-plaintext highlighter-rouge">x</code>; you can change it to <code class="language-plaintext highlighter-rouge">y</code> (measure along the y axis) or <code class="language-plaintext highlighter-rouge">a</code> (direct distance between the points). In the <em>description</em> column, add a brief description of this measurement.</p>
         <h3 id="child-measurements">Child measurements</h3>
         <table class="table table-hover">
@@ -218,7 +218,7 @@ YTRA | d       | p       |
     </main>
     <footer class="container mx-auto px-auto px-md-4 my-4" markdown=1>
       <ul class="list-inline">
-        <li class="list-inline-item"><a href='https://gferreira.github.io/xTools4/changelog'>changelog</a></li>
+        <li class="list-inline-item"><a href='http://localhost:4000/changelog'>changelog</a></li>
         <li class="list-inline-item"><a href='http://github.com/gferreira/xTools4'>source code</a></li>
         <li class="list-inline-item"><a href='http://github.com/gferreira/xTools4/issues'>issues</a></li>
       </ul>
@@ -226,7 +226,7 @@ YTRA | d       | p       |
         This work is licensed under <a href='http://creativecommons.org/licenses/by-sa/4.0/'>Creative Commons Attribution-ShareAlike 4.0 International</a>.
       </p>
       <p class='small text-muted'>
-        <i class="bi bi-arrow-counterclockwise"></i> Last updated on 30 May 2026 14:26:12.
+        <i class="bi bi-arrow-counterclockwise"></i> Last updated on 11 Jul 2026 13:41:13.
       </p>
     </footer>
   </body>

@@ -9,7 +9,7 @@ practical steps · learning-oriented · useful when studying
 
 ## Creating parametric variable fonts with xTools4
 
-<span class='badge bg-danger rounded-0'>draft</span> 
+<span class='badge bg-warning rounded-0'>draft</span> 
 
 ### Phase I
 {: .h5 }

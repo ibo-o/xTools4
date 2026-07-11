@@ -30,19 +30,21 @@ The controller object takes care of building and managing the designspace, ensur
 ### Duties of the controller
 {: .h5 }
 
-- create new parametric sources
-- set source names automatically from measurements
-- clean-up and normalize UFO sources
-- build the parametric designspace from measurements
-- ...
+- creating new parametric sources
+- setting source names automatically from measurements
+- cleaning-up and normalizing UFO sources
+- building the parametric designspace from measurements
+- copying various kinds of data from the default to other sources
 
-A documentation of the xProject API is on its way.
+…and much more. See the [xProject API documentation] for an overview of all methods and attributes available.
+
+[xProject API documentation]: ../../reference/xproject
 
 
 The controller object
 ---------------------
 
-The `xProject` controller is a base object which is meant to be subclassed and customized for each project. It provides a basic API for gathering different kinds of data from multiple files and building a parametric variable font from it.
+The `xProject` controller is a base object which is meant to be subclassed and customized for each project. It provides a basic API for gathering different kinds of data from multiple files, and building a parametric variable font from that.
 
 ```python
 from xTools4.modules.xproject import xProject
@@ -56,28 +58,28 @@ p.printSettings()
 ### Default project settings
 {: .h5 }
 
-| base folder | MyFolder/ |
-| family name | My Family |
-| designspace file | MyFamily.designspace |
-| designspace path | MyFolder/Sources/MyFamily.designspace |
-| sources folder name | Sources |
-| sources folder path | MyFolder/Sources/ |
-| default name | wght400 |
-| default path | MyFolder/Sources/MyFamily_wght400.ufo |
-| measurements file | measurements.json |
-| measurements path | MyFolder/Sources/measurements.json |
-| smart sets file | MyFamily.roboFontSets |
-| smart sets path | MyFolder/Sources/MyFamily.roboFontSets |
-| blends file | blends.json |
-| blends path | MyFolder/Sources/blends.json |
-| tuning folder name | corners |
-| tuning folder path | MyFolder/Sources/corners/ |
-| instances folder name | instances |
-| instances folder path | MyFolder/Sources/instances/ |
-| fonts folder name | Fonts |
-| fonts folder | MyFolder/Fonts/ |
-| variable font file | MyFamily.ttf |
-| variable font path | MyFolder/Fonts/MyFamily.ttf |
+| base folder           | `MyFolder/`                              |
+| family name           | `My Family`                              |
+| designspace file      | `MyFamily.designspace`                   |
+| designspace path      | `MyFolder/Sources/MyFamily.designspace`  |
+| sources folder name   | `Sources`                                |
+| sources folder path   | `MyFolder/Sources/`                      |
+| default name          | `wght400`                                |
+| default path          | `MyFolder/Sources/MyFamily_wght400.ufo`  |
+| measurements file     | `measurements.json`                      |
+| measurements path     | `MyFolder/Sources/measurements.json`     |
+| smart sets file       | `MyFamily.roboFontSets`                  |
+| smart sets path       | `MyFolder/Sources/MyFamily.roboFontSets` |
+| blends file           | `blends.json`                            |
+| blends path           | `MyFolder/Sources/blends.json`           |
+| tuning folder name    | `tuning`                                 |
+| tuning folder path    | `MyFolder/Sources/tuning/`               |
+| instances folder name | `instances`                              |
+| instances folder path | `MyFolder/Sources/instances/`            |
+| fonts folder name     | `Fonts`                                  |
+| fonts folder          | `MyFolder/Fonts/`                        |
+| variable font file    | `MyFamily.ttf`                           |
+| variable font path    | `MyFolder/Fonts/MyFamily.ttf`            |
 {: .table .table-hover }
 
 
@@ -109,7 +111,7 @@ p = MyController(folder, 'My Family', 'Roman')
 p.printSettings()
 ```
 
-This will produce the output below. Notice how the subfamily *Roman* is now part of the designspace name and sources folder.
+This will produce the output below. Notice how the subfamily name *Roman* is now part of the designspace name and sources folder.
 
 ```plaintext
 base folder: MyFolder/
@@ -123,3 +125,11 @@ sources folder path: MyFolder/Sources/Roman (False)
 
 ...
 ```
+
+More customization is added during the development of the project as needed.
+
+See the [AmstelvarA2 controller] and [Computer Modern controller] for examples of xProject in use.
+
+[AmstelvarA2 controller]: http://github.com/gferreira/amstelvar-avar2/blob/main/Tools/controller.py
+[Computer Modern controller]: http://github.com/gferreira/computer-modern-avar2/blob/main/Tools/controller.py
+

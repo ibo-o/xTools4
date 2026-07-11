@@ -7,13 +7,13 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://gferreira.github.io/xTools4/css/style.css" type="text/css" />
+    <link rel="stylesheet" href="http://localhost:4000/css/style.css" type="text/css" />
     <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
   </head>
   <body >
     <nav id='navbar-main' class="navbar fixed-top navbar-expand-sm"> <!-- navbar-dark bg-secondary -->
       <div class="container mx-auto px-md-4">
-        <a class="navbar-brand" id='logo' href="https://gferreira.github.io/xTools4/">
+        <a class="navbar-brand" id='logo' href="http://localhost:4000/">
           <i class="bi bi-tools fs-2"></i>
         </a>
         <button class="navbar-toggler navbar-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarItems" aria-controls="navbarItems" aria-expanded="false" aria-label="Toggle navigation">
@@ -21,10 +21,10 @@
         </button>
         <div class="collapse navbar-collapse user-select-none" id="navbarItems">
           <ul class="navbar-nav me-auto">
-            <li class="nav-item"><a class="nav-link" href="https://gferreira.github.io/xTools4/explanations/">explanations</a></li>
-            <li class="nav-item"><a class="nav-link" href="https://gferreira.github.io/xTools4/tutorials/">tutorials</a></li>
-            <li class="nav-item"><a class="nav-link" href="https://gferreira.github.io/xTools4/how-tos/">how-tos</a></li>
-            <li class="nav-item"><a class="nav-link" href="https://gferreira.github.io/xTools4/reference/">reference</a></li>
+            <li class="nav-item"><a class="nav-link" href="http://localhost:4000/explanations/">explanations</a></li>
+            <li class="nav-item"><a class="nav-link" href="http://localhost:4000/tutorials/">tutorials</a></li>
+            <li class="nav-item"><a class="nav-link" href="http://localhost:4000/how-tos/">how-tos</a></li>
+            <li class="nav-item"><a class="nav-link" href="http://localhost:4000/reference/">reference</a></li>
           </ul>
         </div>
       </div>
@@ -36,10 +36,10 @@
           <nav class='col-sm-3 mt-sm-2'>
             <ul class="pagination pagination-sm float-end">
               <li class="page-item">
-                <a class="page-link px-3 rounded-0 prev" href="https://gferreira.github.io/xTools4//reference/measurement-scales-thresholds/" title='Measurement scales and thresholds'>&laquo;</a>
+                <a class="page-link px-3 rounded-0 prev" href="http://localhost:4000//reference/measurement-scales-thresholds/" title='Measurement scales and thresholds'>&laquo;</a>
               </li>
               <li class="page-item">
-                <a class="page-link px-3 rounded-0 next" href="https://gferreira.github.io/xTools4//reference/rounding-format/" title='Rounding format'>&raquo;</a>
+                <a class="page-link px-3 rounded-0 next" href="http://localhost:4000//reference/rounding-format/" title='Rounding format'>&raquo;</a>
               </li>
             </ul>
           </nav>
@@ -47,10 +47,10 @@
         <nav aria-label="breadcrumb">
           <ol class='breadcrumb'>
             <li class='breadcrumb-item small'>
-              <a href="https://gferreira.github.io/xTools4">Index</a>
+              <a href="http://localhost:4000">Index</a>
             </li>
             <li class='breadcrumb-item small'>
-              <a href="https://gferreira.github.io/xTools4/reference/">
+              <a href="http://localhost:4000/reference/">
                 Reference
               </a>
             </li>
@@ -72,7 +72,13 @@
               </li>
             </ul>
           </li>
-          <li><a href="#python-example" id="markdown-toc-python-example">Python example</a></li>
+          <li><a href="#python-example" id="markdown-toc-python-example">Python example</a>    
+            <ul>
+              <li><a href="#font-level-measurements-1" id="markdown-toc-font-level-measurements-1">Font-level measurements</a></li>
+              <li><a href="#glyph-level-measurements-1" id="markdown-toc-glyph-level-measurements-1">Glyph-level measurements</a></li>
+              <li><a href="#custom-reference-points" id="markdown-toc-custom-reference-points">Custom reference points</a></li>
+            </ul>
+          </li>
           <li><a href="#json-format" id="markdown-toc-json-format">JSON format</a></li>
         </ul>
         <h2 id="data-structure">Data structure</h2>
@@ -184,11 +190,8 @@
             </tr>
           </tbody>
         </table>
-        <div class="card bg-light my-3 rounded-0">
-          <div class="card-header">note</div>
-          <div class="card-body">
-            <p class="card-text">The sign of the measured value indicates its direction. Some measurements are by definition negative, for example the descender value or a bottom overshoot.</p>
-          </div>
+        <div class="alert alert-primary my-4 rounded-0" role="alert">
+          The sign of the measured value indicates its direction. Some measurements are by definition negative, for example the descender value or a bottom overshoot.
         </div>
         <h3 id="point-ids">Point IDs</h3>
         <p>Points can be identified by a <strong>number</strong> (point index) or a <strong>letter</strong> (reference point).</p>
@@ -238,7 +241,11 @@
             </tr>
           </tbody>
         </table>
+        <div class="alert alert-warning  my-4 rounded-0" role="alert">
+          <p class="card-text">In addition to the standard (latin) vertical metrics values above, custom reference points can be defined – for example alignment zones for other scripts, or additional alignment points for latin.</p>
+        </div>
         <h2 id="python-example">Python example</h2>
+        <h3 id="font-level-measurements-1">Font-level measurements</h3>
         <p>The key for font-level measurements is the name of the measurement.</p>
         <div class="language-python highlighter-rouge">
           <div class="highlight">
@@ -256,6 +263,7 @@
 </code></pre>
           </div>
         </div>
+        <h3 id="glyph-level-measurements-1">Glyph-level measurements</h3>
         <p>The key for glyph-level measurements is an identifier created from the two point IDs.</p>
         <div class="language-python highlighter-rouge">
           <div class="highlight">
@@ -272,11 +280,38 @@
 </code></pre>
           </div>
         </div>
-        <div class="card bg-light my-3 rounded-0">
-          <div class="card-header">note</div>
-          <div class="card-body">
-            <p class="card-text">The current glyph-level measurement format has one limitation: a pair of points can only have one measurement attached to it. It should be possible to have both x and y measurements for same pair of points though, for example the width and height of a serif. The format will be updated to address this.</p>
-          </div>
+        <div class="alert alert-primary my-4 rounded-0" role="alert">
+          The current glyph-level measurement format has one limitation: a pair of points can only have one measurement attached to it. It should be possible to have both x and y measurements for same pair of points though (for example, the width and height of a serif). The format can be updated in the future to address this issue.
+        </div>
+        <div class="alert alert-warning  my-4 rounded-0" role="alert">
+          <h3 id="custom-reference-points">Custom reference points</h3>
+          <p>There is no standard or character limit for custom point names. Short letter codes are preferable for quicker typing and reading.</p>
+          <div class="language-python highlighter-rouge">
+            <div class="highlight">
+              <pre class="highlight"><code><span class="n">customPoints</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="c1"># additional vertical metrics for latin
+</span>    <span class="sh">'</span><span class="s">O</span><span class="sh">'</span> <span class="p">:</span> <span class="p">{</span>
+        <span class="sh">'</span><span class="s">y</span><span class="sh">'</span> <span class="p">:</span> <span class="mi">640</span><span class="p">,</span>
+        <span class="sh">'</span><span class="s">description</span><span class="sh">'</span> <span class="p">:</span> <span class="sh">'</span><span class="s">old style figures top</span><span class="sh">'</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="c1"># custom vertical metrics for arabic
+</span>    <span class="sh">'</span><span class="s">AS</span><span class="sh">'</span> <span class="p">:</span> <span class="p">{</span>
+        <span class="sh">'</span><span class="s">y</span><span class="sh">'</span> <span class="p">:</span> <span class="mi">1600</span><span class="p">,</span>
+        <span class="sh">'</span><span class="s">description</span><span class="sh">'</span> <span class="p">:</span> <span class="sh">'</span><span class="s">[arabic] sky</span><span class="sh">'</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="sh">'</span><span class="s">AT</span><span class="sh">'</span> <span class="p">:</span> <span class="p">{</span>
+        <span class="sh">'</span><span class="s">y</span><span class="sh">'</span> <span class="p">:</span> <span class="mi">800</span><span class="p">,</span>
+        <span class="sh">'</span><span class="s">description</span><span class="sh">'</span> <span class="p">:</span> <span class="sh">'</span><span class="s">[arabic] tooth</span><span class="sh">'</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="sh">'</span><span class="s">AE</span><span class="sh">'</span> <span class="p">:</span> <span class="p">{</span>
+        <span class="sh">'</span><span class="s">y</span><span class="sh">'</span> <span class="p">:</span> <span class="o">-</span><span class="mi">400</span><span class="p">,</span>
+        <span class="sh">'</span><span class="s">description</span><span class="sh">'</span> <span class="p">:</span> <span class="sh">'</span><span class="s">[arabic] earth</span><span class="sh">'</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="c1"># more custom points here ...
+</span><span class="p">}</span>
+</code></pre>
+            </div>
+  </div>
         </div>
         <h2 id="json-format">JSON format</h2>
         <p>Measurements can be stored in standalone JSON files using the format below.</p>
@@ -321,7 +356,7 @@
     </main>
     <footer class="container mx-auto px-auto px-md-4 my-4" markdown=1>
       <ul class="list-inline">
-        <li class="list-inline-item"><a href='https://gferreira.github.io/xTools4/changelog'>changelog</a></li>
+        <li class="list-inline-item"><a href='http://localhost:4000/changelog'>changelog</a></li>
         <li class="list-inline-item"><a href='http://github.com/gferreira/xTools4'>source code</a></li>
         <li class="list-inline-item"><a href='http://github.com/gferreira/xTools4/issues'>issues</a></li>
       </ul>
@@ -329,7 +364,7 @@
         This work is licensed under <a href='http://creativecommons.org/licenses/by-sa/4.0/'>Creative Commons Attribution-ShareAlike 4.0 International</a>.
       </p>
       <p class='small text-muted'>
-        <i class="bi bi-arrow-counterclockwise"></i> Last updated on 30 May 2026 14:26:12.
+        <i class="bi bi-arrow-counterclockwise"></i> Last updated on 10 Jul 2026 18:33:06.
       </p>
     </footer>
   </body>

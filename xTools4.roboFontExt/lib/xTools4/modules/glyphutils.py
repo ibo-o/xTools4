@@ -2,9 +2,10 @@
 
 import operator
 import math
-
+import drawBot as DB
 from fontPens.guessSmoothPointPen import GuessSmoothPointPen
 from fontParts.world import RGlyph
+from xTools4.modules.pens import DecomposePointPen
 
 def autoStartPoints(glyph):
     '''
@@ -135,6 +136,24 @@ def setSmoothPoints(glyph):
     glyph.drawPoints(pen)
     glyph.clearContours()
     glyph.appendGlyph(result)
+
+def drawGlyph(glyph):
+    B = DB.BezierPath()
+    glyph.draw(B)
+    DB.drawPath(B)
+
+def decomposeGlyph(glyph):
+    if glyph.components:
+        g = RGlyph()
+        pointPen = g.getPointPen()
+        decomposePen = DecomposePointPen(glyph.font, pointPen)
+        glyph.drawPoints(decomposePen)
+        g.name    = glyph.name
+        g.unicode = glyph.unicode
+        g.width   = glyph.width
+    else:
+        g = glyph.copy()
+    return g
 
 # --------
 # rounding
@@ -536,3 +555,29 @@ def getPointByID(glyph, pointID):
                 break
     return point
 
+
+
+def getImplicitSelectedPoints(glyph):
+    '''
+    http://forum.robofont.com/topic/742/easier-way-of-getting-all-selected-contour-points
+
+    '''
+    pts = []
+    for contour in glyph.contours:
+        for i, segment in enumerate(contour.segments):
+            for pt in segment:
+                if not pt.selected:
+                    continue
+                pts.append(pt)
+                # implicit == include BCPs in selection
+                if pt.type != 'offcurve':
+                    # bcpIn
+                    if len(segment) == 3:
+                        bcpIn = segment[-2]
+                        pts.append(bcpIn)
+                    # bcpOut
+                    nextSegment = contour[(i + 1) % len(contour.segments)]
+                    if len(nextSegment) == 3:
+                        bcpOut = nextSegment[0]
+                        pts.append(bcpOut)
+    return pts

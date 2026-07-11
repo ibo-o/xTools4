@@ -5,16 +5,7 @@ Tools to work with accented glyphs using `Glyph Construction`_ syntax.
 
 '''
 
-try:
-    from glyphConstruction import *
-except:
-    # add GlyphConstruction module
-    import sys
-    modulePath = '/_code/GlyphConstruction/Lib'
-    if modulePath not in sys.path:
-        print('installing glyphConstruction module…')
-        sys.path.append(modulePath)
-
+from glyphConstruction import *
 from xTools4.modules.unicode import autoUnicode
 
 #: A basic default list of latin diacritics.
@@ -64,7 +55,7 @@ def buildConstructionGlyph(constructionGlyph, font, clear=True, autoUnicodes=Tru
 
     return glyph
 
-def buildGlyphConstruction(font, construction, clear=True, verbose=False, indentLevel=0, autoUnicodes=True): # markColor=None
+def buildGlyphConstruction(font, construction, clear=True, verbose=False, indentLevel=0, autoUnicodes=True, markColor=None):
 
     '''
     Build glyph from Glyph Construction rule in the given font.
@@ -98,6 +89,9 @@ def buildGlyphConstruction(font, construction, clear=True, verbose=False, indent
 
     # build construction glyph in the font
     glyph = buildConstructionGlyph(constructionGlyph, font, clear=clear, autoUnicodes=autoUnicodes)
+
+    if markColor is not None:
+        glyph.markColor = markColor
 
     return glyph
 
@@ -147,13 +141,13 @@ def buildAccentedGlyphs(font, glyphNames, glyphConstructions, clear=True, markCo
         # print info
         if verbose:
             tab = '\t' * indentLevel
-            print(f"{tab}building {cg.name}...")
+            print(f"{tab}building /{cg.name}...")
 
         # build glyph in the font
         buildConstructionGlyph(cg, font, clear=clear, autoUnicodes=autoUnicodes)
 
 def buildGlyphConstructions(font, glyphConstructions, clear=True, markColor=None, verbose=False, indentLevel=0, autoUnicodes=True):
-    r'''
+    '''
     Build new glyphs in a font from a string of Glyph Construction definitions.
 
     Args:

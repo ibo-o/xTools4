@@ -39,6 +39,10 @@ A Pythonic API for scripting font source data for parametric variable fonts.
 <td>A list of parametric axes as 4-letter tags.</td>
 </tr>
 <tr>
+<td><code>xProject.parametricAxesNames</code></td>
+<td>A dict with custom parametric axis names (values) for 4-letter tags (keys).</td>
+</tr>
+<tr>
 <td><code>xProject.parametricAxesHidden</code></td>
 <td>A switch to make parametric axes hidden (or not).</td>
 </tr>
@@ -111,8 +115,12 @@ A Pythonic API for scripting font source data for parametric variable fonts.
 <td>Returns the full path of the glyph construction file.</td>
 </tr>
 <tr>
+<td><code>xProject.glyphConstructionsRaw</code></td>
+<td>Returns the raw glyph construction source.</td>
+</tr>
+<tr>
 <td><code>xProject.glyphConstructions</code></td>
-<td>Returns the imported glyph constructions as a dictionary.</td>
+<td>Returns the project’s glyph constructions as a dictionary.</td>
 </tr>
 <tr>
 <td><code>xProject.blendsFile</code></td>
@@ -303,16 +311,16 @@ A Pythonic API for scripting font source data for parametric variable fonts.
 <td>Add tuning sources to the designspace.</td>
 </tr>
 <tr>
-<td><code>xProject.addInstances</code></td>
-<td>Add instances to the designspace.</td>
-</tr>
-<tr>
 <td><code>xProject.addBlendedAxes</code></td>
 <td>Add blended axes to the designspace.</td>
 </tr>
 <tr>
 <td><code>xProject.addBlendedSources</code></td>
 <td>Add blended sources (mappings) to the designspace.</td>
+</tr>
+<tr>
+<td><code>xProject.addInstances</code></td>
+<td>Add instances to the designspace.</td>
 </tr>
 <tr>
 <td><code>xProject.buildDesignspace</code></td>

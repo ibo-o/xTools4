@@ -9,6 +9,15 @@ All notable changes to xTools4 are documented in this file.
 {: .lead }
 
 
+0.3.0
+-----
+
+- <span class='badge rounded-0'>Added</span> Adding new tool BlendsInstancer to instatiate blended glyphs in reference fonts.
+- <span class='badge rounded-0'>Added</span> Adding automatic tuning, parameter splitting, and subsetting to xProject.
+- <span class='badge rounded-0'>Changed</span> Adding a top-level case dropdown list to GlyphMeme tool.
+{: ._changelog .mb-4 }
+
+
 0.2.11
 ------
 

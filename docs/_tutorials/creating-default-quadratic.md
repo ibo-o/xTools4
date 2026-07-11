@@ -33,7 +33,9 @@ Cubic glyphs can be automatically converted to quadratic, but the result needs t
 
 - TrueType em-square needs 2000 or 2048 UPM
 - scale cubic contours before converting to quadratic
-- use [Slinky](#) to scale the whole font
+- use [Slinky](http://github.com/ryanbugden/Slinky) to scale the whole font
+
+[Slinky]: http://github.com/ryanbugden/Slinky)
 
 ### Deciding on the point structure
 {: .h4 }
