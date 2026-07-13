@@ -1,3 +1,9 @@
+from importlib import reload
+import xTools4.modules.measurements
+reload(xTools4.modules.measurements)
+import xTools4.modules.blendsPreview
+reload(xTools4.modules.blendsPreview)
+
 import os, glob, json, shutil, time, datetime
 import subprocess
 from functools import cached_property
@@ -315,6 +321,11 @@ class xProject:
         return { os.path.splitext(os.path.split(f)[-1])[0]: f for f in glob.glob(f'{self.referenceSourcesFolder}/*.ufo')}
 
     @property
+    def referenceMeasurementsPath(self):
+        '''Returns the full path of the measurements file for reference sources.'''
+        return os.path.join(self.referenceSourcesFolder, self.measurementsFile)
+
+    @property
     def referenceBlendsPath(self):
         '''Returns the full path of the blends file for reference sources.'''
         return os.path.join(self.referenceSourcesFolder, self.blendsFile)
@@ -455,9 +466,32 @@ class xProject:
             ufoPaths += self.tuningSourcesPaths
         batchUpdateGlyphsFromDefault(glyphNames, ufoPaths, self.defaultSourcePath, oldDefaultPath, preflight=preflight)
 
-    def copyGlyphsFromDefault(self, glyphNames, sourceNames=None):
-        '''Copy glyphs from the default source to other sources.'''
-        pass
+    def copyGlyphsFromDefault(self, glyphNames, parametricSources=True, tuningSources=False):
+        '''Copy default glyphs to all sources.'''
+        ufoPaths = []
+        if parametricSources:
+            ufoPaths += self.sourcesPaths
+        if tuningSources:
+            ufoPaths += self.tuningSourcesPaths
+
+        srcFont = OpenFont(self.defaultSourcePath, showInterface=False)
+
+        print(f'copying glyphs from the default to all other sources...')
+
+        for dstPath in ufoPaths:
+            if dstPath == self.defaultSourcePath:
+                continue
+
+            print(f'\tcopying glyphs to {os.path.split(dstPath)[-1]}...')
+            dstFont = OpenFont(dstPath, showInterface=False)
+            for glyphName in glyphNames:
+                if glyphName not in srcFont:
+                    continue
+                print(f'\t\tcopying /{glyphName}...')
+                dstFont[glyphName] = srcFont[glyphName]
+            dstFont.save()
+
+        print('...done!\n')
 
     def copyGroupsFromDefault(self):
         '''Copy groups from the default source to other sources.'''
@@ -644,7 +678,7 @@ class xProject:
         if self.verbose:
             print('...done!\n')
 
-    def calculateTuningSources(self, glyphNames, referenceSource, levels=[1, 2, 3]):
+    def calculateTuningSources(self, glyphNames, referenceSource, levels=[1, 2, 3], tuneBaseGlyphs=True):
         '''Calculate tuning sources for glyphs based on reference default source.'''
 
         referenceFont = OpenFont(referenceSource, showInterface=False)
@@ -653,18 +687,22 @@ class xProject:
         operator.read(self.designspacePath)
         operator.loadFonts()
 
-        referenceSources = {'_'.join(k.split('_')[1:]): OpenFont(v, showInterface=False) for k, v in self.referenceSourcesPaths.items()}
+        referenceSources = { '_'.join(k.split('_')[1:]): OpenFont(v, showInterface=False) for k, v in self.referenceSourcesPaths.items() }
+
+        if tuneBaseGlyphs:
+            baseGlyphs = []
+            for glyphName in glyphNames:
+                g = self.defaultFont[glyphName]
+                for c in g.components:
+                    baseGlyphs.append(c.baseGlyph)
+            baseGlyphs = set(baseGlyphs)
+            glyphNames = list(baseGlyphs) + glyphNames
 
         for glyphName in glyphNames:
 
-            glyphDefault = self.defaultFont[glyphName]
-
-            # SKIP COMPOSITE GLYPHS!
-            # collect base glyphs for tuning?
-            if glyphDefault.components:
-                continue
-
+            glyphDefault   = self.defaultFont[glyphName]
             glyphReference = referenceFont[glyphName]
+
             matchingPoints = getMatchingPoints(glyphDefault, glyphReference)
 
             if self.verbose:
@@ -973,7 +1011,7 @@ class xProject:
         if 'PYTHONHOME' in os.environ:
            del os.environ['PYTHONHOME']
 
-        print(f"\tbuilding avar2 font... ", end='')
+        print(f"\tbuilding avar2 font...", end=' ')
 
         cmd  = ['/Library/Frameworks/Python.framework/Versions/3.11/bin/fontmake']
         cmd += ['-m', self.designspacePath]
@@ -992,7 +1030,7 @@ class xProject:
                 print(line,)
             retval = p.wait()
 
-        print(f'{os.path.exists(self.varFontPath)}')
+        print(f'({os.path.exists(self.varFontPath)})')
 
         # subset variable font with pyftsubset
         if subset:
@@ -1309,6 +1347,9 @@ class xProject:
             pdfFileName = os.path.splitext(os.path.split(self.designspacePath)[-1])[0]
             tuningProofsFolder = os.path.join(self.proofsFolder, 'PDF', 'tuning')
             T.save(tuningProofsFolder, pdfFileName)
+
+
+
 
 
 

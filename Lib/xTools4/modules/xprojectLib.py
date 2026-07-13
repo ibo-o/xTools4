@@ -163,3 +163,4 @@ def batchUpdateGlyphsFromDefault(glyphNames, ufoPaths, newDefaultPath, oldDefaul
 
     updateGlyphsFromDefault(oldDefault, oldDefault, newDefault, glyphNames, preflight=preflight)
 
+

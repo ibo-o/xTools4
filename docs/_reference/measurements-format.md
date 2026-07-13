@@ -14,7 +14,7 @@ A data format to store definitions of font-level and glyph-level measurements.
 Data structure
 --------------
 
-A measurement establishes a link between two points and allows us to calculate the distance between them.
+A measurement establishes a link between two points and returns the distance between them.
 
 The order of the points matters: a measurement can be positive or negative.
 
@@ -24,42 +24,37 @@ The order of the points matters: a measurement can be positive or negative.
 - Font measurement names must be unique.
 - The order of the font measurements matters.
 
-| attribute   | description                                            |
-|-------------|--------------------------------------------------------|
-| name        | name of the measurement                                |
-| glyph 1     | name of the glyph containing the 1st measurement point |
-| point 1     | index or shortcut of 1st measurement point             |
-| glyph 2     | name of the glyph containing the 2nd measurement point |
-| point 2     | index or shortcut of 2nd measurement point             |
-| direction   | direction of measurement                               |
-| parent      | parent measurement (optional)                          |
-| description | description of this measurement (optional)             |
+| attribute   | description                                            |           |
+|-------------|--------------------------------------------------------|-----------|
+| name        | name of the measurement                                | required  |
+| glyph 1     | name of the glyph containing the 1st measurement point | required  |
+| point 1     | index or shortcut of 1st measurement point             | required  |
+| glyph 2     | name of the glyph containing the 2nd measurement point | required  |
+| point 2     | index or shortcut of 2nd measurement point             | required  |
+| direction   | direction of measurement                               | required  |
+| parent      | parent measurement                                     | optional  |
+| description | description of this measurement                        | optional  |
 {: .table .table-hover }
 
-{% comment %}
-<div class="card bg-light my-3 rounded-0">
-<div class="card-header">note</div>
-<div class="card-body" markdown='1'>
-The attribute *glyph 2* can probably be deprecated. It was available to allow measurement of overshoots using a straight shape from one glyph and a round shape from another glyph. Overshoot measurement is now possible using [reference points](#reference-points).
+<div class="alert alert-warning my-4 rounded-0" role="alert" markdown=1>
+The attribute *glyph 2* can be made optional. If it is omitted, we assume *glyph 2* to be the same as *glyph 1*.
 {: .card-text }
 </div>
-</div>
-{% endcomment %}
 
 ### Glyph-level measurements
 
 - A glyph may contain multiple glyph-level measurements.
-- Glyph measurement names are usually related to font-level measurements.
+- Glyph measurement names are related to font-level measurements.
 - Glyph measurement names must **not** be unique.
-- Glyph measurement identifiers are created from the point indexes.
+- Glyph measurement identifiers are created from the index or name of its two points.
 - The order of glyph measurements follows the order of font measurements.
 
-| attribute | description                                            |
-|-----------|--------------------------------------------------------|
-| name      | name of the measurement                                |
-| point 1   | index or shortcut of 1st measurement point             |
-| point 2   | index or shortcut of 2nd measurement point             |
-| direction | direction of measurement                               |
+| attribute | description                             |
+|-----------|-----------------------------------------|
+| name      | name of the measurement                 |
+| point 1   | index or name of 1st measurement point  |
+| point 2   | index or name of 2nd measurement point  |
+| direction | direction of measurement                |
 {: .table .table-hover }
 
 ### Direction keys
@@ -73,9 +68,7 @@ The direction of measurement must be one of the following characters:
 | a          | angled measurement     |
 {: .table .table-hover }
 
-<div class="alert alert-primary my-4 rounded-0" role="alert">
-The sign of the measured value indicates its direction. Some measurements are by definition negative, for example the descender value or a bottom overshoot.
-</div>
+The order of the points in a measurement matters: the sign of the measured value indicates its direction. Some measurements are by definition negative, for example the descender value or a bottom overshoot.
 
 ### Point IDs
 
@@ -87,18 +80,18 @@ Contour points are identified by their index (an integer).
 
 #### Reference points
 
-Font-level vertical metrics values are also available using the following shortcut characters:
+Font-level vertical metrics are also available using the following shortcut characters:
 
-| character | description | x             | y                     |
-|-----------|-------------|---------------|-----------------------|
-| A         | ascender    | `0`           | `font.info.ascender`  |
-| B         | baseline    | `0`           | `0`                   |
-| C         | cap height  | `0`           | `font.info.capHeight` |
-| D         | descender   | `0`           | `font.info.descender` |
-| X         | x-height    | `0`           | `font.info.xHeight`   |
+| character | description | y-position            |
+|-----------|-------------|-----------------------|
+| A         | ascender    | `font.info.ascender`  |
+| B         | baseline    | `0`                   |
+| C         | cap height  | `font.info.capHeight` |
+| D         | descender   | `font.info.descender` |
+| X         | x-height    | `font.info.xHeight`   |
 {: .table .table-hover }
 
-<div class="alert alert-warning  my-4 rounded-0" role="alert" markdown=1>
+<div class="alert alert-warning my-4 rounded-0" role="alert" markdown=1>
 In addition to the standard (latin) vertical metrics values above, custom reference points can be defined – for example alignment zones for other scripts, or additional alignment points for latin.
 {: .card-text }
 </div>
@@ -142,7 +135,7 @@ glyphMeasurements = {
 }
 ```
 
-<div class="alert alert-primary my-4 rounded-0" role="alert">
+<div class="alert alert-warning my-4 rounded-0" role="alert">
 The current glyph-level measurement format has one limitation: a pair of points can only have one measurement attached to it. It should be possible to have both x and y measurements for same pair of points though (for example, the width and height of a serif). The format can be updated in the future to address this issue.
 </div>
 
